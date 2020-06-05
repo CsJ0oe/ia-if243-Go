@@ -40,7 +40,7 @@ class myPlayer(PlayerInterface):
         start_time = time.time()
         root = MCTSNode(board_org.weak_legal_moves())
         # add nodes (at least 10,000 rollouts per turn)
-        i=0;
+        i=0
         pool = Pool()
         while(True):
             board = copy.deepcopy(board_org)
@@ -65,7 +65,6 @@ class myPlayer(PlayerInterface):
                 print()
                 break
             i+=pool._processes
-            i+=1
             print("round %d (%f)" % (i,time.time()-start_time), end='\r')
         # debug
         scored_moves = [(child.winning_frac(board_org.next_player()), child.move, child.num_rollouts)
