@@ -36,7 +36,7 @@ class myPlayer(PlayerInterface):
             print("I lost :(")
 
     @staticmethod
-    def select_move(board_org, max_time=7.5, temperature=1.4):
+    def select_move(board_org, max_time=7.4, temperature=1.2):
         start_time = time.time()
         root = MCTSNode(board_org.weak_legal_moves())
         # add nodes (at least 10,000 rollouts per turn)
