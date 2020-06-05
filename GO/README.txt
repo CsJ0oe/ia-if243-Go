@@ -1,15 +1,18 @@
-myPlayer.py:
+alphabetaPlayer.py: (Reference implementation viewed in class)
 	# Techniques used:
 	TODO: évoquez comment vous avez décidé d'utiliser telle ou telle technique
 		- Minimax algorithm
 		- Alpha-Beta pruning
-		- iterative deepening
-		- Transposition table
+		- iterative deepening (max_time = 7.4 sec)
+		- Transposition table (unlimited size)
 	# Heuristique
-	TODO: décrivez l'heuristique codée
+		we didn't have a clear idea how to implement this, and online resource are complicated (research papers),
+		so we tried a simple evaluation using score, piece positions and liberties.
 
 mctsPlayer.py:
-	Monte Carlo Tree Search:
+	Monte Carlo Tree Search: (inspired by Deep Learning and the Game of Go by Max Pumperla Kevin Ferguson)
 	we started with this algorithm because we didn't have a clear idea how to implement the evaluation function,
-	but the implementation of Goban.py wasn't fast enough to run multiple simulation (300 simulation in 7.4 seconds, but we needed 1000 at least to make a good move),
-	so we dropped this idea, and we ended up with the above implementation of alpha-beta (myPlayer.py)
+	but the implementation of Goban.py wasn't fast enough to run multiple simulation (500-1000 simulation in 7.4 seconds, but we needed 2000 at least to make a good move).
+
+myPlayer.py:
+	Just a copy of mctsPlayer.py for the AI Tournament

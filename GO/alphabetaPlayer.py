@@ -68,6 +68,8 @@ class myPlayer(PlayerInterface):
         best_value = float('-inf') if is_max_turn else float('+inf')
         action_targets = []
         for action_key in key_of_actions:
+            if action_key == -1:
+                continue
             self.board.push(action_key)
             eval_child, action_child = self.minimax(depth-1, not is_max_turn, alpha, beta)
             self.board.pop()
@@ -93,40 +95,43 @@ class myPlayer(PlayerInterface):
 
     def evaluate(self):
         position_score = [ 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                           0, 2, 2, 2, 1, 2, 2, 2, 0,
+                           0, 2, 2, 2, 1, 2, 2, 2, 0,
+                           0, 2, 2, 1, 1, 1, 2, 2, 0,
                            0, 1, 1, 1, 1, 1, 1, 1, 0,
-                           0, 1, 2, 2, 2, 2, 2, 1, 0,
-                           0, 1, 2, 2, 2, 2, 2, 1, 0,
-                           0, 1, 2, 2, 2, 2, 2, 1, 0,
-                           0, 1, 2, 2, 2, 2, 2, 1, 0,
-                           0, 1, 2, 2, 2, 2, 2, 1, 0,
-                           0, 1, 1, 1, 1, 1, 1, 1, 0,
+                           0, 2, 2, 1, 1, 1, 2, 2, 0,
+                           0, 2, 2, 2, 1, 2, 2, 2, 0,
+                           0, 2, 2, 2, 1, 2, 2, 2, 0,
                            0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-        opponent = self.board.next_player()
 
         score_pieces = 0
         if self.board.next_player() == Board._BLACK:
-            score_pieces += (self.board._nbWHITE-self.board._nbBLACK)*10 # score for white
+            score_pieces += (self.board._nbWHITE-self.board._nbBLACK)*3 # score for white
         else:
-            score_pieces += (self.board._nbBLACK-self.board._nbWHITE)*10 # score for black
+            score_pieces += (self.board._nbBLACK-self.board._nbWHITE)*3 # score for black
 
         score_liberties = 0
         score_positions = 0
         for fcoord in range(len(self.board)):
             if self.board[fcoord] == Board._EMPTY:
                 pass
-            elif self.board[fcoord] == opponent:
+            elif self.board[fcoord] == self.board.next_player():
                 # Liberties
                 string = self.board._getStringOfStone(fcoord)
-                score_liberties -= self.board._stringLiberties[string] * 5
+                score_liberties -= self.board._stringLiberties[string] * 2
                 # Corner + position
                 score_positions -= position_score[fcoord]*2
             else:
                 # Liberties
                 string = self.board._getStringOfStone(fcoord)
-                score_liberties += self.board._stringLiberties[string] * 5
+                score_liberties += self.board._stringLiberties[string] * 2
                 # Corner + position
                 score_positions += position_score[fcoord]*2
+
+        if self.board.next_player() == self.mycolor:
+            score_pieces *= -1
+            score_liberties *= -1
+            score_positions *= -1
 
         
         return score_pieces*normal(1, 0.1) + score_positions*normal(1, 0.1) + score_liberties*normal(1, 0.1)

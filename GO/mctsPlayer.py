@@ -71,7 +71,7 @@ class myPlayer(PlayerInterface):
         scored_moves = [(child.winning_frac(board_org.next_player()), child.move, child.num_rollouts)
                         for child in root.children]
         scored_moves.sort(key=lambda x: x[0], reverse=True)
-        for s, m, n in scored_moves:
+        for s, m, n in scored_moves[:5]:
             print('%s - %.3f (%d)' % (m, s, n))
         # pick best node
         best_move = None
@@ -125,7 +125,7 @@ class myPlayer(PlayerInterface):
                 return friendly_corners >= 3
             # Point is on the edge or corner.
             return (4-i_org-i) + friendly_corners == 4
-
+        # ==============================
         while not board.is_game_over():
             moves = board.weak_legal_moves()
             random.shuffle(moves)
@@ -134,6 +134,8 @@ class myPlayer(PlayerInterface):
                 if not(is_point_an_eye(board, move)) and (board.play_move(move)):
                     valid_move = move
                     break
+            if valid_move == -1:
+                board.play_move(-1)
         if (board._nbWHITE > board._nbBLACK):
             return "1-0"
         elif (board._nbWHITE < board._nbBLACK):
@@ -156,15 +158,14 @@ class MCTSNode():
         self.num_rollouts = 0
         self.children = []
         self.unvisited_moves = unvisited_moves
+        random.shuffle(self.unvisited_moves)
 
     def add_random_child(self, board):
-        index = random.randint(0, len(self.unvisited_moves)-1)
-        new_move = self.unvisited_moves.pop(index)
-        while board.play_move(new_move) == False:
+        new_move = self.unvisited_moves.pop()
+        while (new_move == -1) and (board.play_move(new_move) == False):
             if not self.can_add_child():
                 return self
-            index = random.randint(0, len(self.unvisited_moves)-1)
-            new_move = self.unvisited_moves.pop(index)
+            new_move = self.unvisited_moves.pop()
         new_node = MCTSNode(board.weak_legal_moves(), self, new_move)
         self.children.append(new_node)
         return new_node
