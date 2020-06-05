@@ -52,7 +52,7 @@ class myPlayer(PlayerInterface):
             print("MINIMAX AB ID(%d) : Done, eval=%d, action=%d, time=%s" % (depth, eval_score, selected_action, time()-tmp_time))
             if (time()-self.start_time >= self.max_time):
                 break
-            depth+=2
+            depth+=1
         return selected_action
 
     def minimax(self, depth, is_max_turn, alpha, beta):

@@ -571,10 +571,10 @@ class Board:
                         touched_whites += 1
             # here we have gathered all the informations about an empty area
             assert len(currentstring) == ssize
-            assert touched_blacks > 0 or touched_whites > 0
-            if touched_blacks == 0:
+            assert (self._nbBLACK == 0 and self._nbWHITE == 0) or touched_blacks > 0 or touched_whites > 0
+            if touched_blacks == 0 and touched_whites > 0:
                 only_whites += ssize
-            elif touched_whites == 0:
+            elif touched_whites == 0 and touched_blacks > 0:
                 only_blacks += ssize
             else:
                 others += ssize
