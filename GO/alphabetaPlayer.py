@@ -22,7 +22,6 @@ class myPlayer(PlayerInterface):
             return "PASS" 
         move = self.choose_action()
         self.board.push(move)
-        self.board.prettyPrint()
         return Board.flat_to_name(move) 
 
     def playOpponentMove(self, move):
@@ -66,6 +65,7 @@ class myPlayer(PlayerInterface):
         key_of_actions = list(self.board.generate_legal_moves())
         shuffle(key_of_actions) #randomness
         best_value = float('-inf') if is_max_turn else float('+inf')
+        best_action = -1
         action_targets = []
         for action_key in key_of_actions:
             if action_key == -1:
@@ -89,7 +89,8 @@ class myPlayer(PlayerInterface):
                     break
             elif best_value == eval_child:
                 action_targets.append(action_key)
-        best_action = choice(action_targets) #randomness
+        if not not action_targets:
+            best_action = choice(action_targets) #randomness
         self.transposition_table.update({str(self.board._currentHash): (best_value, best_action)})
         return (best_value, best_action)
 

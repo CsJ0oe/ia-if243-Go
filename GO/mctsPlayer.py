@@ -53,6 +53,7 @@ class myPlayer(PlayerInterface):
                 #board.push(node.move)
             winners = []
             results = []
+            # use all cores of the processor
             for proc in range(pool._processes):
                 results.append(pool.apply_async(myPlayer.simulate_random_game, [board]))
             for res in results:
@@ -65,7 +66,7 @@ class myPlayer(PlayerInterface):
                 print()
                 break
             i+=pool._processes
-            print("round %d (%f)" % (i,time.time()-start_time), end='\r')
+            print("Rounds %d (%f)" % (i,time.time()-start_time), end='\r')
         # debug
         scored_moves = [(child.winning_frac(board_org.next_player()), child.move, child.num_rollouts)
                         for child in root.children]
@@ -73,7 +74,7 @@ class myPlayer(PlayerInterface):
         for s, m, n in scored_moves[:5]:
             print('%s - %.3f (%d)' % (m, s, n))
         # pick best node
-        best_move = None
+        best_move = -1
         best_pct = -1.0
         for child in root.children:
             child_pct = child.winning_frac(board_org.next_player())

@@ -12,7 +12,8 @@ alphabetaPlayer.py: (Reference implementation viewed in class)
 mctsPlayer.py:
 	Monte Carlo Tree Search: (inspired by Deep Learning and the Game of Go by Max Pumperla Kevin Ferguson)
 	we started with this algorithm because we didn't have a clear idea how to implement the evaluation function,
-	but the implementation of Goban.py wasn't fast enough to run multiple simulation (500-1000 simulation in 7.4 seconds, but we needed 2000 at least to make a good move).
+	but the implementation of Goban.py wasn't fast enough to run multiple simulation (500-1000 simulation in 7.4 seconds, but we needed 2000 at least to make a good move),
+	so we dropped this idea, and we ended up with the above implementation of alpha-beta (alphabetaPlayer.py).
 
 myPlayer.py:
 	Just a copy of mctsPlayer.py for the AI Tournament
