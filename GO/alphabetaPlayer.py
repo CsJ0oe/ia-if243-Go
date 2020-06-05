@@ -116,15 +116,15 @@ class myPlayer(PlayerInterface):
             elif self.board[fcoord] == self.board.next_player():
                 # Liberties
                 string = self.board._getStringOfStone(fcoord)
-                score_liberties -= self.board._stringLiberties[string] * 2
+                score_liberties -= self.board._stringLiberties[string]*1
                 # Corner + position
-                score_positions -= position_score[fcoord]*3
+                score_positions -= position_score[fcoord]*10
             else:
                 # Liberties
                 string = self.board._getStringOfStone(fcoord)
-                score_liberties += self.board._stringLiberties[string] * 2
+                score_liberties += self.board._stringLiberties[string]*1
                 # Corner + position
-                score_positions += position_score[fcoord]*3
+                score_positions += position_score[fcoord]*10
 
         if self.board.next_player() == self.mycolor:
             score_pieces *= -1
