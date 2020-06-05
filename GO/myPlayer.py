@@ -43,12 +43,11 @@ class myPlayer(PlayerInterface):
         (eval_score, selected_action) = (-1, -1)
         while(True):
             tmp_time = time()
-            print("MINIMAX AB ID(%d) : Wait AI is choosing" % (depth))
             self.transposition_table = {}
             new_score, new_action = self.minimax(depth, True, float('-inf'), float('+inf'))
             if (time()-self.start_time < self.max_time):
                 (eval_score, selected_action) = (new_score, new_action)
-            print("MINIMAX AB ID(%d) : Done, eval=%d, action=%d, time=%s" % (depth, eval_score, selected_action, time()-tmp_time))
+            print("MINIMAX AB ID(%d) : eval=%f, action=%d, time=%s" % (depth, eval_score, selected_action, time()-tmp_time))
             if (time()-self.start_time >= self.max_time):
                 break
             depth+=1
@@ -68,8 +67,6 @@ class myPlayer(PlayerInterface):
         best_action = -1
         action_targets = []
         for action_key in key_of_actions:
-            if action_key == -1:
-                continue
             self.board.push(action_key)
             eval_child, action_child = self.minimax(depth-1, not is_max_turn, alpha, beta)
             self.board.pop()
@@ -121,13 +118,13 @@ class myPlayer(PlayerInterface):
                 string = self.board._getStringOfStone(fcoord)
                 score_liberties -= self.board._stringLiberties[string] * 2
                 # Corner + position
-                score_positions -= position_score[fcoord]*2
+                score_positions -= position_score[fcoord]*5
             else:
                 # Liberties
                 string = self.board._getStringOfStone(fcoord)
                 score_liberties += self.board._stringLiberties[string] * 2
                 # Corner + position
-                score_positions += position_score[fcoord]*2
+                score_positions += position_score[fcoord]*5
 
         if self.board.next_player() == self.mycolor:
             score_pieces *= -1
