@@ -1,6 +1,6 @@
 alphabetaPlayer.py: (Reference implementation viewed in class)
 	# Techniques used:
-	TODO: évoquez comment vous avez décidé d'utiliser telle ou telle technique
+		TODO: évoquez comment vous avez décidé d'utiliser telle ou telle technique
 		- Minimax algorithm
 		- Alpha-Beta pruning
 		- iterative deepening (max_time = 7.4 sec)
@@ -16,4 +16,4 @@ mctsPlayer.py:
 	so we dropped this idea, and we ended up with the above implementation of alpha-beta (alphabetaPlayer.py).
 
 myPlayer.py:
-	Just a copy of mctsPlayer.py for the AI Tournament
+	Just a copy of alphabetaPlayer.py for the AI Tournament
